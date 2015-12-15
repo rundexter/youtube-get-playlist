@@ -1,6 +1,6 @@
-var _ = require('lodash')
-    , env = require('./env')
-    ;
+var _   = require('lodash')
+  , env = require('./env')
+;
 
 module.exports = _.merge({
     /*
@@ -63,7 +63,8 @@ module.exports = _.merge({
              */
             input: {
                 //Replace VAR1 with the name of an expected input, and add more inputs as needed.
-                VAR1: 'foo'
+                part: 'id,contentDetails,snippet,status',
+                channelId: 'UCMtFAi84ehTSYSE9XoHefig'
             }
         }
     }

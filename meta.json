@@ -3,24 +3,51 @@
  */
 {
     //Required. Inputs the module expects.
-    "inputs": [
-        //e.g.
-        /*
-        {
-            "id": "from",
-            "title":"From"
-        }
-        */
-    ],
+    "inputs": [{
+          "id": "part",
+          "title":"Part"
+      }, {
+          "id": "channelId",
+          "title":"Channel ID"
+      }, {
+          "id": "id",
+          "title":"ID"
+      }, {
+          "id": "mine",
+          "title":"Mine"
+      }, {
+          "id": "hl",
+          "title":"Language Code"
+      }, {
+          "id": "maxResults",
+          "title":"Max Results"
+      }, {
+          "id": "onBehalfOfContentOwner",
+          "title":"OBoCO"
+      }, {
+          "id": "onBehalfOfContentOwnerChannel",
+          "title":"OBoCOC"
+    }],
     //Required. Outputs the module emits.
-    "outputs": [
-      //e.g.
-      /*
-        {
-            "id": "from",
-            "title":"From"
-        }
-      */
-    ],
+    "outputs": [{
+       "id": "id",
+       "title":"Playlist Id"
+    }, {
+       "id":"playlist_title",
+       "title":"Playlist Title"
+    }, {
+       "id":"playlist_thumbnail",
+       "title":"Playlist Thumbnail"
+    }],
+    "providers": [{
+        "name": "google",
+        "scopes": [
+            "https://www.googleapis.com/auth/youtube",
+            "https://www.googleapis.com/auth/youtube.force-ssl",
+            "https://www.googleapis.com/auth/youtube.readonly",
+            "https://www.googleapis.com/auth/youtubepartner"
+        ]
+    }],
+    "icon": "youtube-play",
     "title": "YouTube Get Playlist" /* Required.A display name for the module */
 }
