@@ -64,7 +64,7 @@ module.exports = _.merge({
             input: {
                 //Replace VAR1 with the name of an expected input, and add more inputs as needed.
                 part: 'id,contentDetails,snippet,status',
-                channelId: 'UCMtFAi84ehTSYSE9XoHefig'
+                channelId: ['UCMtFAi84ehTSYSE9XoHefig','UC8-Th83bH_thdKZDJCrn88g']
             }
         }
     }

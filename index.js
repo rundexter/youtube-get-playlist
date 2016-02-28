@@ -1,6 +1,7 @@
 var _       = require('lodash')
   , google  = require('googleapis')
   , util    = require('./util.js')
+  , q       = require('q')
   , service = google.youtube('v3')
 ;
 
@@ -34,6 +35,7 @@ module.exports = {
           , oauth2Client = new OAuth2()
           , access_token = dexter.provider('google').credentials('access_token')
           , self         = this
+          , promises     = []
         ;
 
         // set credentials
@@ -41,17 +43,29 @@ module.exports = {
 
         google.options({ auth: oauth2Client });
 
-        service.playlists.list(util.pickInputs(step, pickInputs), function (error, data) {
-          return error
-            ? self.fail(error) 
-            : self.complete(_.map(data.items, function(i) {
-                return { 
-                    id                   : i.id
-                    , playlist_title     : _.get(i, 'snippet.title')
-                    , playlist_thumbnail : _.get(i, 'snippet.thumbnails.default.url')
-                    , channel_title      : _.get(i, 'snippet.channelTitle')
-                };
-            }));
+        step.input('channelId').each(function(channelId) {
+            promises.push(
+                q.nfcall(service.playlists.list.bind(service.playlists), _.extend(util.pickInputs(step, pickInputs), {channelId: channelId}))
+            );
         });
+
+        q.all(promises)
+          .then(function(results) {
+            var items = [];
+            _.each(results, function(result) {
+               items = items.concat(_.map(result[0].items, function(i) {
+                      return { 
+                          id                   : i.id
+                          , playlist_title     : _.get(i, 'snippet.title')
+                          , playlist_thumbnail : _.get(i, 'snippet.thumbnails.default.url')
+                          , channel_title      : _.get(i, 'snippet.channelTitle')
+                      };
+               }));
+            });
+
+            self.complete(items);
+          })
+          .catch(this.fail.bind(this))
+        ;
     }
 };
